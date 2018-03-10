@@ -1,10 +1,14 @@
-Faster AJAX response
-More results from AJAX calls
-cache AJAX?
-caching on Wordpress side?
-caching js files
 consolidating js files
+More (or less) results from AJAX calls
+cache AJAX?
 clean up/comment CSS
 article order
+
+Service worker?
+Prefetch?
+better empty states and loading indicators
+
+Include webpack in build process.
+Move to Contentful (with their logo)
 
 Wordpress menus and user roles http://mediatemple.net/blog/news/customizing-the-wordpress-admin-experience-for-clients/?utm_source=weekly_newsletter&utm_medium=email&utm_content=wpadmin_cta&utm_campaign=03282016_newsletter
