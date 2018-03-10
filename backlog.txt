@@ -1,4 +1,3 @@
-consolidating js files
 More (or less) results from AJAX calls
 cache AJAX?
 clean up/comment CSS
