@@ -54,7 +54,7 @@ function apiRequest (pathname, callback) {
       break;
     case '/current.html':
       endpoint = '/entries';
-      query = '?content_type=currentWork';
+      query = '?content_type=work';
       break;
     case '/choreography.html':
       endpoint = '/entries';
@@ -72,7 +72,7 @@ function apiRequest (pathname, callback) {
   );
 }
 
-// about.js
+// about.html
 function renderAbout (data) {
   var div = createElement('div');
 
@@ -83,7 +83,7 @@ function renderAbout (data) {
   return div;
 }
 
-// choreography.js
+// choreography.html
 // function vimeo (url) {
 //   if (!/vimeo/.test(url)) {
 //     return url;
@@ -104,24 +104,60 @@ function renderChoreography (data) {
       createElement('h4', null, fields.title)
     );
     div.appendChild(
-      createElement('div', {'class': 'embed-container'}, fields.videoEmbeds)
+      createElement('div', {'class': 'embed-containe'}, fields.videoEmbeds)
     );
 
     return div;
   });
 }
 
-// content.js
+// content.html
 function renderCurrent (data) {
-  var div = createElement('div');
-  div.appendChild(
-    createElement('h4', null, data.title.rendered)
-  );
-  div.appendChild(
-    createElement('p', null, data.content.rendered)
-  );
+  console.log(data);
+  var items = data.items;
+  items.sort(function (a, b) { return a.fields.date < b.fields.date; });
 
-  return div;
+  var ul = createElement('ul', {class: 'current-works'});
+  items.map(function (item) {
+    var fields = item.fields;
+    var li = createElement('li', {class: 'current-works__item'});
+    if (fields.image) {
+      var img = findAsset(data.includes.Asset, fields.image.sys.id);
+
+      var imgContainer = createElement('div', {class: 'list-item__image-container'});
+      imgContainer.appendChild(
+        createElement('img', {class: 'list-item__image', src: img.fields.file.url})
+      );
+      li.appendChild(imgContainer);
+    }
+
+    var listItemInfo = createElement('div', {class: 'list-item__info'});
+
+    listItemInfo.appendChild(
+      createElement('h3', {class: 'list-item__title'}, fields.title)
+    );
+    listItemInfo.appendChild(
+      createElement('p', null, fields.description)
+    );
+    if (fields.location) {
+      listItemInfo.appendChild(
+        createElement('p', null, fields.location)
+      );
+    }
+    if (fields.date) {
+      listItemInfo.appendChild(
+        createElement('time', {datetime: fields.date}, dateToText(fields.date))
+      );
+    }
+
+    li.appendChild(listItemInfo);
+
+    return li;
+  }).forEach(function (li) {
+    ul.appendChild(li);
+  });
+
+  return ul;
 }
 
 function findAsset (assets, id) {
@@ -136,7 +172,7 @@ function findAsset (assets, id) {
   return found;
 }
 
-// writing.js
+// writing.html
 function renderPublications (data) {
   var items = data.items;
   items.sort(function (a, b) { return a.fields.sortDate < b.fields.sortDate; });
@@ -205,4 +241,26 @@ function renderContent (res) {
 
   if (Array.isArray(content)) content.forEach(main.appendChild.bind(main));
   else main.appendChild(content);
+}
+
+var dateRE = new RegExp('(\\d{4})-(\\d{2})-(\\d{2})');
+var months = {
+  '01': 'January',
+  '02': 'February',
+  '03': 'March',
+  '04': 'April',
+  '05': 'May',
+  '06': 'June',
+  '07': 'July',
+  '08': 'August',
+  '09': 'September',
+  '10': 'October',
+  '11': 'November',
+  '12': 'December'
+};
+
+function dateToText (date) {
+  var matches = date.match(dateRE);
+
+  return months[matches[2]] + ' ' + (+matches[3]) + ', ' + matches[1];
 }

@@ -2,7 +2,9 @@
 
 /* Resets and globals */
 ul {
+  list-style: none;
   margin-top: 0;
+  padding: 0;
 }
 
 body {
@@ -38,6 +40,11 @@ h6 {
   body {
     border-top-width: 40px;
   }
+}
+
+img {
+  max-height: 100%;
+  max-width: 100%;
 }
 
 /* Header */
@@ -86,8 +93,6 @@ h6 {
   border-bottom: 7px solid #4c4c4c;
   border-top: 7px solid #4c4c4c;
   box-sizing: border-box;
-  list-style: none;
-  padding: 0 0;
 }
 
 .menu-item {
@@ -195,11 +200,39 @@ h6 {
   width: 100%;
 }
 
+.list-item__image-container {
+  max-height: 200px;
+  text-align: center;
+}
+
 @media (min-width: 600px) {
   .content-area {
     box-sizing: border-box;
     margin-left: 20px;
     width: 70%;
+  }
+
+  .list-item__title {
+    margin-top: 0;
+  }
+
+  .list-item__image-container {
+    max-height: 200px;
+    margin-right: .5rem;
+    min-width: 150px;
+  }
+}
+
+/* Page-specific content area */
+
+.current-works__item {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 600px) {
+  .current-works__item {
+    flex-direction: row;
   }
 }
 
