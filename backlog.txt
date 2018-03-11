@@ -1,7 +1,6 @@
 More (or less) results from AJAX calls
 cache AJAX?
 clean up/comment CSS
-article order
 
 Service worker?
 Prefetch?

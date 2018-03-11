@@ -1,9 +1,14 @@
-/* globals XMLHttpRequest */
-var category = window.location.pathname.substr(1, window.location.pathname.indexOf('.') - 1);
+/* globals showdown, XMLHttpRequest */
+var converter = new showdown.Converter();
+var markdownToHtml = converter.makeHtml.bind(converter);
 
-function request (url, callback) {
+apiRequest(window.location.pathname, renderContent);
+
+function xhr (url, authToken, callback) {
   var httpRequest = new XMLHttpRequest();
   httpRequest.open('GET', url, true);
+  httpRequest.setRequestHeader('Authorization', 'Bearer ' + authToken);
+
   httpRequest.send();
   httpRequest.onreadystatechange = function () {
     if (httpRequest.readyState === XMLHttpRequest.DONE) {
@@ -15,7 +20,6 @@ function request (url, callback) {
 }
 
 var ready = [];
-
 window.addEventListener('load', loaded);
 function loaded () {
   ready.forEach(function (fn) { fn(); });
@@ -36,64 +40,79 @@ function createElement (name, attributes, children) {
   return el;
 }
 
-function getArticles (cat, callback) {
-  var endpoint = cat === 'about' ? 'pages' : 'posts';
+function apiRequest (pathname, callback) {
+  var space = 'qb5whqojhy98';
+  var key = '9ef6c24841ef62982292eb35568541eb0fa9a423267edb0226444fa3acc81624';
+
+  var base = 'https://cdn.contentful.com';
+  var endpoint = '';
   var query = '';
-  if (endpoint !== 'pages') query = '?filter[category_name]=' + cat;
 
-  request('http://lesliesatin.com/wp/wp-json/wp/v2/' + endpoint + query, function (response) {
-    onReady(function () { callback(response); });
-  });
-}
+  switch (pathname) {
+    case '/about.html':
+      endpoint = '/entries/2JxwNt394sAwY6I4GqIquQ';
+      break;
+    case '/current.html':
+      endpoint = '/entries';
+      query = '?content_type=currentWork';
+      break;
+    case '/choreography.html':
+      endpoint = '/entries';
+      query = '?content_type=choreography';
+      break;
+    case '/writing.html':
+      endpoint = '/entries';
+      query = '?content_type=publication';
+  }
 
-function getRenderFn (category) {
-
-}
-
-function render (dataArr, fn) {
-  var main = document.getElementsByTagName('main')[0];
-  var loading = document.getElementById('loading');
-  loading.parentElement.removeChild(loading);
-
-  dataArr.map(fn).forEach(main.appendChild.bind(main));
+  xhr(
+    base + '/spaces/' + space + endpoint + query,
+    key,
+    function (response) { onReady(function () { callback(response); }); }
+  );
 }
 
 // about.js
 function renderAbout (data) {
   var div = createElement('div');
+
   div.appendChild(
-    createElement('h4', null, data.title.rendered)
+    createElement('div', null, markdownToHtml(data.fields.body))
   );
-  div.appendChild(
-    createElement('p', null, data.content.rendered)
-  );
+
   return div;
 }
 
 // choreography.js
-function vimeo (url) {
-  if (!/vimeo/.test(url)) {
-    return url;
-  }
-  var idNum = url.match(/\d+/g)[0];
-  return '<iframe src="https://player.vimeo.com/video/' + idNum + '" ' +
-    'frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
-}
+// function vimeo (url) {
+//   if (!/vimeo/.test(url)) {
+//     return url;
+//   }
+//   var idNum = url.match(/\d+/g)[0];
+//   return '<iframe src="https://player.vimeo.com/video/' + idNum + '" ' +
+//     'frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+// }
 
 function renderChoreography (data) {
-  var div = createElement('div');
-  div.appendChild(
-    createElement('h4', null, data.title.rendered)
-  );
-  div.appendChild(
-    createElement('div', {'class': 'embed-container'}, vimeo(data.content.rendered))
-  );
+  var items = data.items;
+  items.sort(function (a, b) { return a.fields.sortDate < b.fields.sortDate; });
 
-  return div;
+  return items.map(function (item) {
+    var fields = item.fields;
+    var div = createElement('div');
+    div.appendChild(
+      createElement('h4', null, fields.title)
+    );
+    div.appendChild(
+      createElement('div', {'class': 'embed-container'}, fields.videoEmbeds)
+    );
+
+    return div;
+  });
 }
 
 // content.js
-function renderContent (data) {
+function renderCurrent (data) {
   var div = createElement('div');
   div.appendChild(
     createElement('h4', null, data.title.rendered)
@@ -105,39 +124,85 @@ function renderContent (data) {
   return div;
 }
 
+function findAsset (assets, id) {
+  var found = null;
+  for (var i = 0; i < assets.length; i++) {
+    var asset = assets[i];
+    if (id === asset.sys.id) {
+      found = asset;
+      break;
+    }
+  }
+  return found;
+}
+
 // writing.js
-function makeArticle (title, content) {
-  var div = createElement('div', {'class': 'article'});
-  div.appendChild(
-    createElement('h3', null, title)
-  );
-  div.appendChild(
-    createElement('p', {'class': 'cite'}, content)
-  );
-  return div;
+function renderPublications (data) {
+  var items = data.items;
+  items.sort(function (a, b) { return a.fields.sortDate < b.fields.sortDate; });
+
+  return items.map(function (item) {
+    var fields = item.fields;
+    // <div>
+    //   <h3>{title}</h3>
+    //   <span>{publication} – {publicationIssue}</span>
+    //   <p>{notes}</p>
+    //   <a href='{link || asset.fields.file.url}'>Read</a>
+    // </div>
+    var div = createElement('div', {'class': 'publication'});
+    div.appendChild(
+      createElement('h3', null, fields.title)
+    );
+    // sortDate
+    // attachment?
+    div.appendChild(
+      createElement('p', {'class': 'cite'}, fields.publication + (fields.publicationIssue ? ' — ' + fields.publicationIssue : ''))
+    );
+    if (fields.notes) {
+      div.appendChild(
+        createElement('p', null, fields.notes)
+      );
+    }
+
+    if (fields.link) {
+      div.appendChild(
+        createElement('a', {href: fields.link, target: '_blank', rel: 'nofollow'}, 'Read')
+      );
+    }
+
+    if (fields.attachment) {
+      var asset = findAsset(data.includes.Asset, fields.attachment.sys.id);
+
+      div.appendChild(
+        createElement('a', {href: asset.fields.file.url, target: '_blank', rel: 'nofollow'}, 'Read')
+      );
+    }
+
+    return div;
+  });
 }
 
-function renderWriting (data) {
-  return makeArticle(data.title.rendered, data.content.rendered);
-}
+function renderContent (res) {
+  var main = document.getElementsByTagName('main')[0];
+  var loading = document.getElementById('loading');
+  loading.parentElement.removeChild(loading);
 
-getArticles(category, function (arr) {
-  var renderFn;
-
-  switch (category) {
-    case 'about':
-      renderFn = renderAbout;
+  var content;
+  switch (window.location.pathname) {
+    case '/about.html':
+      content = renderAbout(res);
       break;
-    case 'choreography':
-      renderFn = renderChoreography;
+    case '/choreography.html':
+      content = renderChoreography(res);
       break;
-    case 'content':
-      renderFn = renderContent;
+    case '/current.html':
+      content = renderCurrent(res);
       break;
-    case 'writing':
-      renderFn = renderWriting;
+    case '/writing.html':
+      content = renderPublications(res);
       break;
   }
 
-  render(arr, renderFn);
-});
+  if (Array.isArray(content)) content.forEach(main.appendChild.bind(main));
+  else main.appendChild(content);
+}
