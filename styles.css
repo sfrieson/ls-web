@@ -128,10 +128,8 @@ img {
   overflow: hidden;
 }
 
-.img-1,
-.img-2,
-.img-3 {
-  width: 100%;
+picture + picture {
+  margin-left: 10px;
 }
 
 .img-1 {
