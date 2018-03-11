@@ -128,7 +128,7 @@ function renderCurrent (data) {
   var ul = createElement('ul', {class: 'current-works'});
   items.map(function (item) {
     var fields = item.fields;
-    var section = createElement('section', {itemscope: '', itemtype: 'http://schema.org/CreativeWork'});
+    var section = createElement('section', {itemscope: '', itemtype: 'http://schema.org/CreativeWork', class: 'current-works__item'});
 
     if (fields.image) {
       var img = findAsset(data.includes.Asset, fields.image.sys.id);
@@ -161,7 +161,7 @@ function renderCurrent (data) {
 
     section.appendChild(listItemInfo);
 
-    var li = createElement('li', {class: 'current-works__item'});
+    var li = createElement('li');
     li.append(section);
 
     return li;
