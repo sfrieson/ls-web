@@ -9,48 +9,52 @@
   <script src="/scripts/index.js" charset="utf-8"></script>
 </head>
 <body>
-
   <div class="page">
     <header>
-      <h1 class='header__title'><a href="/">Leslie Satin</a></h1>
+      <h1 class='header__title'>
+        <a class='header__link' href="/">Leslie Satin</a>
+      </h1>
     </header>
-    <div class="wrapper">
+    <div class="layout">
       <aside>
         <nav>
           <ul class="menu">
-            <li><a href="/about.html">About</a></li>
-            <li><a href="/choreography.html">Choreography</a></li>
-            <!-- <li><a href="/dance.html">Dance</a></li> -->
-            <!-- <li><a href="/teaching.html">Teaching</a></li> -->
-            <li><a href="/writing.html" class="current">Writing</a></li>
-            <li><a href="/contact.html">Contact</a></li>
+            <li class='menu-item'>
+              <a class='menu-link' href="/about.html">About</a>
+            </li>
+            <li class='menu-item'>
+              <a class='menu-link' href="/choreography.html">Choreography</a>
+            </li>
+            <li class='menu-item'>
+              <a class='menu-link menu-link--active' href="/writing.html">Writing</a>
+            </li>
+            <li class='menu-item'>
+              <a class='menu-link' href="/contact.html">Contact</a>
+            </li>
           </ul>
+          <div class="images">
+            <picture>
+              <img class="img-1" src='/images/take-off_and_landing-1.jpg' alt='' />
+            </picture>
+            <picture>
+              <img class="img-2" src='/images/far_from_it-1.jpg' alt='' />
+            </picture>
+            <picture>
+              <img class="img-3" src='/images/shadow_load-2.jpg' alt='' />
+            </picture>
+          </div>
         </nav>
-        <div class="images">
-          <picture>
-            <img class="img-1" src='/images/take-off_and_landing-1.jpg' alt='' />
-          </picture>
-          <picture>
-            <img class="img-2" src='/images/far_from_it-1.jpg' alt='' />
-          </picture>
-          <picture>
-            <img class="img-3" src='/images/shadow_load-2.jpg' alt='' />
-          </picture>
-        </div>
       </aside>
-      <main>
+      <main class='content-area'>
         <h2 class="title">Writing</h2>
         <div id="loading">
           <img src="/images/loading.svg" alt="Loading content...">
         </div>
       </main>
     </div>
-
     <footer class='footer'>
       <div id="copyright">Copyright &copy; 2016 - 2018 Leslie Satin</div>
     </footer>
-
   </div>
-
 </body>
 </html>

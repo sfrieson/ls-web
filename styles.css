@@ -1,3 +1,6 @@
+/* Mobile first, larger sizes at the end of each section. */
+
+/* Resets and globals */
 ul {
   margin-top: 0;
 }
@@ -22,16 +25,44 @@ a:hover {
   font-weight: bold;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Arial, sans-serif;
+}
+
+@media (min-width: 600px) {
+  body {
+    border-top-width: 40px;
+  }
+}
+
+/* Header */
+
 .header__title {
   font-size: 1.7rem;
   margin: 0.5rem 0 1rem;
 }
 
-.wrapper {
-  display: flex;
-  flex-direction: column;
+.header__link {
+  text-decoration: none;
 }
 
+.notice {
+  background-color: white;
+  text-align: center;
+}
+
+@media (min-width: 600px) {
+  .header__title {
+    margin: 1rem 0 1.5rem;
+  }
+}
+
+/* Main Area */
 .page {
   box-sizing: border-box;
   font-family: arial;
@@ -44,32 +75,12 @@ a:hover {
   width: 100%;
 }
 
-.title {
-  font-size: 2rem;
-  margin-top: 0;
+.layout {
+  display: flex;
+  flex-direction: column;
 }
 
-main a {
-  color: darkred;
-}
-
-.embed-container {
-  height: 0;
-  max-width: 100%;
-  overflow: hidden;
-  padding-bottom: 56.25%;
-  position: relative;
-}
-
-.embed-container iframe,
-.embed-container object,
-.embed-container embed {
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-}
+/* Menu */
 
 .menu {
   border-bottom: 7px solid #4c4c4c;
@@ -79,22 +90,32 @@ main a {
   padding: 0 0;
 }
 
-.menu li {
+.menu-item {
   margin: .3rem 0;
 }
 
-h1 a, .menu a {
+.menu-link {
   text-decoration: none;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: Arial, sans-serif;
+.menu-link--active {
+  color: darkred;
+  font-weight: bold;
 }
+
+@media (min-width: 600px) {
+  .menu {
+    border-bottom-width: 10px;
+    border-top-width: 10px;
+    padding: 10px 0;
+  }
+
+  .menu-item {
+    margin: .5rem 0;
+  }
+}
+
+/* Images */
 
 .images {
   max-height: 200px;
@@ -116,10 +137,53 @@ h6 {
   display: none;
 }
 
-.current {
-  color: darkred;
-  font-weight: bold;
+@media (min-width: 600px) {
+  .images {
+    display: flex;
+  }
+
+  .img-2 {
+    display: block;
+  }
 }
+
+@media (min-width: 966px) {
+  .img-1,
+  .img-2,
+  .img-3 {
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+}
+
+/* Content Area */
+.title {
+  font-size: 2rem;
+  margin-top: 0;
+}
+
+.content-area a {
+  color: darkred;
+}
+
+.embed-container {
+  height: 0;
+  max-width: 100%;
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  position: relative;
+}
+
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
 
 .article p {
   margin: 0;
@@ -133,64 +197,25 @@ h6 {
   font-size: .8em;
 }
 
-.footer {
-  display: block;
-  font-size: .8em;
-  margin-top: 3em;
-  text-align: center;
-}
-
 #loading {
   display: block;
   text-align: center;
   width: 100%;
 }
 
-.notice {
-  background-color: white;
-  text-align: center;
-}
-
 @media (min-width: 600px) {
-  body {
-    border-top-width: 40px;
-  }
-
-  .header__title {
-    margin: 1rem 0 1.5rem;
-  }
-
-  main {
+  .content-area {
     box-sizing: border-box;
     margin-left: 20px;
     width: 70%;
   }
-
-  .menu {
-    border-bottom-width: 10px;
-    border-top-width: 10px;
-    padding: 10px 0;
-  }
-
-  .menu li {
-    margin: .5rem 0;
-  }
-
-  .images {
-    display: flex;
-  }
-
-  .img-2 {
-    display: block;
-  }
 }
 
-@media (min-width: 966px) {
+/* Footer */
 
-  .img-1,
-  .img-2,
-  .img-3 {
-    display: inline-block;
-    margin-bottom: 10px;
-  }
+.footer {
+  display: block;
+  font-size: .8em;
+  margin-top: 3em;
+  text-align: center;
 }
