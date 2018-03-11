@@ -65,6 +65,7 @@ img {
 
 @media (min-width: 600px) {
   .header__title {
+    font-size: 2.4rem;
     margin: 1rem 0 1.5rem;
   }
 }
@@ -82,9 +83,10 @@ img {
   width: 100%;
 }
 
-.layout {
-  display: flex;
-  flex-direction: column;
+@media (min-width: 600px) {
+  .layout {
+    display: flex;
+  }
 }
 
 /* Menu */
@@ -109,9 +111,13 @@ img {
 }
 
 @media (min-width: 600px) {
+  .aside {
+    flex: 1 0 25%;
+  }
   .menu {
     border-bottom-width: 10px;
     border-top-width: 10px;
+    margin-right: 1rem;
     padding: 10px 0;
   }
 
