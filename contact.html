@@ -1,52 +1,60 @@
 <!doctype html>
 <html>
 <head>
-    <title>About | Leslie Satin</title>
-    <meta name="description" content="Leslie Satin: choreographer, dancer, writer.">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="fragment" content="!">
-    <link rel="stylesheet" href="/styles.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <title>About | Leslie Satin</title>
+  <meta name="description" content="Leslie Satin: choreographer, dancer, writer.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 
-    <div class="page">
-        <header>
-            <h1><a href="/">Leslie Satin</a></h1>
-        </header>
-        <div class="wrapper">
-            <aside>
-                <nav>
-                    <ul class="menu">
-                        <li><a href="/about.html">About</a></li>
-                        <li><a href="/choreography.html">Choreography</a></li>
-                        <!-- <li><a href="/dance.html">Dance</a></li> -->
-                        <!-- <li><a href="/teaching.html">Teaching</a></li> -->
-                        <li><a href="/writing.html">Writing</a></li>
-                        <li><a href="/contact.html" class="current">Contact</a></li>
-                    </ul>
-                    <div class="images">
-                        <div class="img-1"></div>
-                        <div class="img-2"></div>
-                    </div>
-                </nav>
-            </aside>
-            <main>
-                <h2 class="title">Contact</h2>
-                You may contact Leslie Satin by <a href="mailto:_email_">clicking here</a>, or by emailing her at <span>_email_</span>.
-            </main>
-        </div>
-
-        <div id="copyright">Copyright &copy; 2016 Leslie Satin</div>
-
+  <div class="page">
+    <header>
+      <h1 class='header__title'><a href="/">Leslie Satin</a></h1>
+    </header>
+    <div class="wrapper">
+      <aside>
+        <nav>
+          <ul class="menu">
+            <li><a href="/about.html">About</a></li>
+            <li><a href="/choreography.html">Choreography</a></li>
+            <!-- <li><a href="/dance.html">Dance</a></li> -->
+            <!-- <li><a href="/teaching.html">Teaching</a></li> -->
+            <li><a href="/writing.html">Writing</a></li>
+            <li><a href="/contact.html" class="current">Contact</a></li>
+          </ul>
+          <div class="images">
+            <picture>
+              <img class="img-1" src='/images/take-off_and_landing-1.jpg' alt='' />
+            </picture>
+            <picture>
+              <img class="img-2" src='/images/far_from_it-1.jpg' alt='' />
+            </picture>
+            <picture>
+              <img class="img-3" src='/images/shadow_load-2.jpg' alt='' />
+            </picture>
+          </div>
+        </nav>
+      </aside>
+      <main>
+        <h2 class="title">Contact</h2>
+        You may contact Leslie Satin by <a href="mailto:_email_">clicking here</a>, or by emailing her at <span>_email_</span>.
+      </main>
     </div>
-    <script type="text/javascript">
-        var user = "leslie.satin",
-            host = "gmail",
-            email = user + '@' + host + ".com";
 
-        $('main a').prop('href', 'mailto:' + email);
-        $('span').text(email);
-    </script>
+    <footer class='footer'>
+      <div id="copyright">Copyright &copy; 2016 - 2018 Leslie Satin</div>
+    </footer>
+
+  </div>
+  <script type="text/javascript">
+  var user = "leslie.satin",
+  host = "gmail",
+  email = user + '@' + host + ".com";
+
+  $('main a').prop('href', 'mailto:' + email);
+  $('span').text(email);
+  </script>
 </body>
 </html>

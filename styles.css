@@ -1,146 +1,20 @@
+ul {
+  margin-top: 0;
+}
+
 body {
-  margin: 0;
-  position: relative;
   background-color: #eee;
-  color: #4c4c4c;
-  border-top: 40px solid #4c4c4c;
-}
-
-@media only screen and (max-width: 966px) {
-  body {
-    margin: 0 5px;
-  }
-}
-
-aside::after {
-  margin: 0;
-  padding: 0;
-}
-
-body * {
+  border-top: 15px solid #4c4c4c;
   box-sizing: border-box;
-}
-
-main, aside {
-  display: inline-block;
-  margin: 0;
-}
-
-.menu, .title {
-  margin-top:0;
-}
-
-aside {
-  width: 25%;
-  float: left;
-}
-
-.images {
-  display: block;
-  overflow: auto;
-}
-
-.images .img-1 {
-  background: url("/images/nine_squares_private-1.jpg");
-  width: 100%;
-  background-position: 50% 20%;
-}
-
-.images .img-2 {
-  background: url('/images/far_from_it-1.jpg');
-  width: 80%;
-  margin: 0;
-  background-position: 50% 15%;
-}
-
-.images .img-1, .images .img-2 {
-  display: block;
-  float: right;
-  background-size: cover;
-}
-
-main {
-  width: 75%;
-  padding-left: 20px;
-  float: left;
-}
-
-main a {
-  color: darkred;
-}
-
-.embed-container {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
-  overflow: hidden;
-  max-width: 100%;
-}
-
-.embed-container iframe, .embed-container object, .embed-container embed {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.wrapper {
-  overflow: auto;
-  display: block;
-}
-
-.page {
-  max-width: 960px;
-  min-height: 100vh;
-  width: 100%;
-  margin: 0 auto;
-  font-size: 18px;
+  color: #4c4c4c;
   font-family: arial;
-  padding: 0;
-  line-height: 1.8;
-}
-
-.menu {
-  border-top: 10px solid #4c4c4c;
-  border-bottom: 10px solid #4c4c4c;
-  list-style: none;
-  padding: 10px 0;
-}
-
-.menu li {
-  margin: 10px 0;
-}
-
-h1 a, .menu a {
-  text-decoration: none;
-}
-
-h1,h2,h3,h4,h5,h6{
-  font-family: Times, "Times", Times New Roman, "Times New Roman", serif;
+  margin: 0;
+  padding: 0 1rem;
+  position: relative;
 }
 
 a {
   color: #4c4c4c;
-}
-
-.img-1 {
-  width: 100%;
-  background: url('./images/take-off_and_landing-1.jpg');
-  background-position: 50% 5%;
-}
-
-.img-2 {
-  width: 40%;
-  background: url('./images/far_from_it-1.jpg');
-  margin-right: 10px;
-  background-position: 50% 15%;
-}
-
-.img-3 {
-  width: calc(60% - 10px);
-  background: url('./images/shadow_load-2.jpg');
-  background-position: 50% 30%;
 }
 
 a:hover {
@@ -148,11 +22,98 @@ a:hover {
   font-weight: bold;
 }
 
-.img-1, .img-2, .img-3 {
-  display: inline-block;
-  height: 200px;
-  margin-bottom: 10px;
-  background-size: cover;
+.header__title {
+  font-size: 1.7rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.page {
+  box-sizing: border-box;
+  font-family: arial;
+  font-size: 18px;
+  line-height: 1.8;
+  margin: 0 auto;
+  max-width: 960px;
+  min-height: 100vh;
+  padding: 0;
+  width: 100%;
+}
+
+.title {
+  font-size: 2rem;
+  margin-top: 0;
+}
+
+main a {
+  color: darkred;
+}
+
+.embed-container {
+  height: 0;
+  max-width: 100%;
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  position: relative;
+}
+
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.menu {
+  border-bottom: 7px solid #4c4c4c;
+  border-top: 7px solid #4c4c4c;
+  box-sizing: border-box;
+  list-style: none;
+  padding: 0 0;
+}
+
+.menu li {
+  margin: .3rem 0;
+}
+
+h1 a, .menu a {
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Arial, sans-serif;
+}
+
+.images {
+  max-height: 200px;
+  overflow: hidden;
+}
+
+.img-1,
+.img-2,
+.img-3 {
+  width: 100%;
+}
+
+.img-1 {
+  display: block;
+ }
+
+.img-2,
+.img-3 {
+  display: none;
 }
 
 .current {
@@ -172,29 +133,72 @@ a:hover {
   font-size: .8em;
 }
 
-#copyright {
+.footer {
+  display: block;
   font-size: .8em;
   margin-top: 3em;
-  display: block;
   text-align: center;
 }
 
 #loading {
-  width: 100%;
-  text-align: center;
   display: block;
+  text-align: center;
+  width: 100%;
 }
 
 .notice {
-  background-color: #fff;
+  background-color: white;
   text-align: center;
 }
 
-@media only screen and (max-width: 966px) {
-  main, aside {
-    display: block;
+@media (min-width: 600px) {
+  body {
+    border-top-width: 40px;
+  }
+
+  .header__title {
+    margin: 1rem 0 1.5rem;
+  }
+
+  main {
+    box-sizing: border-box;
+    margin-left: 20px;
+    width: 70%;
+  }
+
+  .menu {
+    border-bottom-width: 10px;
+    border-top-width: 10px;
+    padding: 10px 0;
+  }
+  .menu li {
+    margin: .5rem 0;
+  }
+}
+
+@media (min-width: 966px) {
+  .img-1 {
+    background-image: url('/images/take-off_and_landing-1.jpg');
     width: 100%;
-    float: none;
-    padding: 0;
+  }
+
+  .img-2 {
+    background-image: url('/images/far_from_it-1.jpg');
+    margin-right: 10px;
+    width: 40%;
+  }
+
+  .img-3 {
+    background-image: url('/images/shadow_load-2.jpg');
+    width: calc(60% - 10px);
+  }
+
+  .img-1,
+  .img-2,
+  .img-3 {
+    background-size: cover;
+    display: inline-block;
+    height: 200px;
+    margin-bottom: 10px;
   }
 }

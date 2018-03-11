@@ -1,4 +1,4 @@
-/* globals $, XMLHttpRequest */
+/* globals XMLHttpRequest */
 var category = window.location.pathname.substr(1, window.location.pathname.indexOf('.') - 1);
 
 function request (url, callback) {
@@ -145,9 +145,3 @@ function renderWriting (arr) {
 }
 
 getArticles(category, getRenderFn(category));
-
-onReady(function () {
-  if (window.innerWidth <= 966) {
-    $('.images').remove().insertBefore('#copyright');
-  }
-});
