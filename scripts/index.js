@@ -1,5 +1,32 @@
-/* globals $ */
+/* globals $, XMLHttpRequest */
 var category = window.location.pathname.substr(1, window.location.pathname.indexOf('.') - 1);
+
+function request (url, callback) {
+  var httpRequest = new XMLHttpRequest();
+  httpRequest.open('GET', url, true);
+  httpRequest.send();
+  httpRequest.onreadystatechange = function () {
+    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+      if (httpRequest.status === 200) {
+        callback(JSON.parse(httpRequest.responseText));
+      }
+    }
+  };
+}
+
+var ready = [];
+
+window.addEventListener('load', loaded);
+function loaded () {
+  ready.forEach(function (fn) { fn(); });
+  ready = true;
+  window.removeEventListener('load', loaded);
+}
+
+function onReady (fn) {
+  if (ready === true) fn();
+  else ready.push(fn);
+}
 
 function createElement (name, attributes, children) {
   var el = document.createElement(name);
@@ -14,11 +41,8 @@ function getArticles (cat, callback) {
   var query = '';
   if (endpoint !== 'pages') query = '?filter[category_name]=' + cat;
 
-  $.get({
-    url: 'http://lesliesatin.com/wp/wp-json/wp/v2/' + endpoint + query,
-    success: function (response) {
-      $(function () { callback(response); });
-    }
+  request('http://lesliesatin.com/wp/wp-json/wp/v2/' + endpoint + query, function (response) {
+    onReady(function () { callback(response); });
   });
 }
 
@@ -122,7 +146,7 @@ function renderWriting (arr) {
 
 getArticles(category, getRenderFn(category));
 
-$(function () {
+onReady(function () {
   if (window.innerWidth <= 966) {
     $('.images').remove().insertBefore('#copyright');
   }
