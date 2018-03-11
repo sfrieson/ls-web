@@ -47,80 +47,62 @@ function getArticles (cat, callback) {
 }
 
 function getRenderFn (category) {
-  switch (category) {
-    case 'about':
-      return renderAbout;
-    case 'choreography':
-      return renderChoreography;
-    case 'content':
-      return renderContent;
-    case 'writing':
-      return renderWriting;
-  }
+
 }
 
-// about.js
-function renderAbout (arr) {
+function render (dataArr, fn) {
   var main = document.getElementsByTagName('main')[0];
   var loading = document.getElementById('loading');
   loading.parentElement.removeChild(loading);
 
-  arr.map(function (data) {
-    var div = createElement('div');
-    div.appendChild(
-      createElement('h4', null, data.title.rendered)
-    );
-    div.appendChild(
-      createElement('p', null, data.content.rendered)
-    );
-    return div;
-  }).forEach(main.appendChild.bind(main));
+  dataArr.map(fn).forEach(main.appendChild.bind(main));
+}
+
+// about.js
+function renderAbout (data) {
+  var div = createElement('div');
+  div.appendChild(
+    createElement('h4', null, data.title.rendered)
+  );
+  div.appendChild(
+    createElement('p', null, data.content.rendered)
+  );
+  return div;
 }
 
 // choreography.js
-var vimeo = function (url) {
+function vimeo (url) {
   if (!/vimeo/.test(url)) {
     return url;
   }
   var idNum = url.match(/\d+/g)[0];
   return '<iframe src="https://player.vimeo.com/video/' + idNum + '" ' +
     'frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
-};
-function renderChoreography (arr) {
-  var main = document.getElementsByTagName('main')[0];
-  var loading = document.getElementById('loading');
-  loading.parentElement.removeChild(loading);
+}
 
-  arr.map(function (data) {
-    var div = createElement('div');
-    div.appendChild(
-      createElement('h4', null, data.title.rendered)
-    );
-    div.appendChild(
-      createElement('div', {'class': 'embed-container'}, vimeo(data.content.rendered))
-    );
+function renderChoreography (data) {
+  var div = createElement('div');
+  div.appendChild(
+    createElement('h4', null, data.title.rendered)
+  );
+  div.appendChild(
+    createElement('div', {'class': 'embed-container'}, vimeo(data.content.rendered))
+  );
 
-    return div;
-  }).forEach(main.appendChild.bind(main));
+  return div;
 }
 
 // content.js
-function renderContent (arr) {
-  var main = document.getElementsByTagName('main')[0];
-  var loading = document.getElementById('loading');
-  loading.parentElement.removeChild(loading);
+function renderContent (data) {
+  var div = createElement('div');
+  div.appendChild(
+    createElement('h4', null, data.title.rendered)
+  );
+  div.appendChild(
+    createElement('p', null, data.content.rendered)
+  );
 
-  arr.map(function (data) {
-    var div = createElement('div');
-    div.appendChild(
-      createElement('h4', null, data.title.rendered)
-    );
-    div.appendChild(
-      createElement('p', null, data.content.rendered)
-    );
-
-    return div;
-  }).forEach(main.appendChild.bind(main));
+  return div;
 }
 
 // writing.js
@@ -134,14 +116,28 @@ function makeArticle (title, content) {
   );
   return div;
 }
-function renderWriting (arr) {
-  var main = document.getElementsByTagName('main')[0];
-  var loading = document.getElementById('loading');
-  if (loading) loading.parentElement.removeChild(loading);
 
-  arr.map(function (data) {
-    return makeArticle(data.title.rendered, data.content.rendered);
-  }).forEach(main.appendChild.bind(main));
+function renderWriting (data) {
+  return makeArticle(data.title.rendered, data.content.rendered);
 }
 
-getArticles(category, getRenderFn(category));
+getArticles(category, function (arr) {
+  var renderFn;
+
+  switch (category) {
+    case 'about':
+      renderFn = renderAbout;
+      break;
+    case 'choreography':
+      renderFn = renderChoreography;
+      break;
+    case 'content':
+      renderFn = renderContent;
+      break;
+    case 'writing':
+      renderFn = renderWriting;
+      break;
+  }
+
+  render(arr, renderFn);
+});

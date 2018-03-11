@@ -171,34 +171,26 @@ h6 {
     border-top-width: 10px;
     padding: 10px 0;
   }
+
   .menu li {
     margin: .5rem 0;
+  }
+
+  .images {
+    display: flex;
+  }
+
+  .img-2 {
+    display: block;
   }
 }
 
 @media (min-width: 966px) {
-  .img-1 {
-    background-image: url('/images/take-off_and_landing-1.jpg');
-    width: 100%;
-  }
-
-  .img-2 {
-    background-image: url('/images/far_from_it-1.jpg');
-    margin-right: 10px;
-    width: 40%;
-  }
-
-  .img-3 {
-    background-image: url('/images/shadow_load-2.jpg');
-    width: calc(60% - 10px);
-  }
 
   .img-1,
   .img-2,
   .img-3 {
-    background-size: cover;
     display: inline-block;
-    height: 200px;
     margin-bottom: 10px;
   }
 }
