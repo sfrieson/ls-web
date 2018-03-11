@@ -97,18 +97,26 @@ function renderChoreography (data) {
   var items = data.items;
   items.sort(function (a, b) { return a.fields.sortDate < b.fields.sortDate; });
 
-  return items.map(function (item) {
+  var ul = createElement('ul', {class: 'current-works'});
+  items.map(function (item) {
     var fields = item.fields;
-    var div = createElement('div');
-    div.appendChild(
-      createElement('h4', null, fields.title)
-    );
-    div.appendChild(
-      createElement('div', {'class': 'embed-containe'}, fields.videoEmbeds)
+    var li = createElement('li');
+    var section = createElement('section', {itemscope: '', itemtype: 'http://schema.org/CreativeWork'});
+
+    section.appendChild(
+      createElement('h2', {itemprop: 'name'}, fields.title)
     );
 
-    return div;
-  });
+    // TODO Figure out how to properly tag embedded video itemprop='video'
+    section.appendChild(
+      createElement('div', {'class': 'embed-container'}, fields.videoEmbeds)
+    );
+
+    li.appendChild(section);
+    return li;
+  }).forEach(function (item) { ul.appendChild(item); });
+
+  return ul;
 }
 
 // content.html
@@ -120,37 +128,41 @@ function renderCurrent (data) {
   var ul = createElement('ul', {class: 'current-works'});
   items.map(function (item) {
     var fields = item.fields;
-    var li = createElement('li', {class: 'current-works__item'});
+    var section = createElement('section', {itemscope: '', itemtype: 'http://schema.org/CreativeWork'});
+
     if (fields.image) {
       var img = findAsset(data.includes.Asset, fields.image.sys.id);
 
       var imgContainer = createElement('div', {class: 'list-item__image-container'});
       imgContainer.appendChild(
-        createElement('img', {class: 'list-item__image', src: img.fields.file.url})
+        createElement('img', {class: 'list-item__image', src: img.fields.file.url, itemprop: 'image'})
       );
-      li.appendChild(imgContainer);
+      section.appendChild(imgContainer);
     }
 
     var listItemInfo = createElement('div', {class: 'list-item__info'});
 
     listItemInfo.appendChild(
-      createElement('h3', {class: 'list-item__title'}, fields.title)
+      createElement('h3', {class: 'list-item__title', itemprop: 'name'}, fields.title)
     );
     listItemInfo.appendChild(
-      createElement('p', null, fields.description)
+      createElement('p', {itemprop: 'about'}, fields.description)
     );
     if (fields.location) {
       listItemInfo.appendChild(
-        createElement('p', null, fields.location)
+        createElement('p', {itemprop: 'locationCreated'}, fields.location)
       );
     }
     if (fields.date) {
       listItemInfo.appendChild(
-        createElement('time', {datetime: fields.date}, dateToText(fields.date))
+        createElement('time', {datetime: fields.date, itemprop: 'datePublished'}, dateToText(fields.date))
       );
     }
 
-    li.appendChild(listItemInfo);
+    section.appendChild(listItemInfo);
+
+    var li = createElement('li', {class: 'current-works__item'});
+    li.append(section);
 
     return li;
   }).forEach(function (li) {
@@ -176,46 +188,60 @@ function findAsset (assets, id) {
 function renderPublications (data) {
   var items = data.items;
   items.sort(function (a, b) { return a.fields.sortDate < b.fields.sortDate; });
+  var ul = createElement('ul');
 
-  return items.map(function (item) {
+  items.map(function (item) {
     var fields = item.fields;
-    // <div>
+    // <section>
     //   <h3>{title}</h3>
     //   <span>{publication} – {publicationIssue}</span>
     //   <p>{notes}</p>
     //   <a href='{link || asset.fields.file.url}'>Read</a>
-    // </div>
-    var div = createElement('div', {'class': 'publication'});
-    div.appendChild(
-      createElement('h3', null, fields.title)
+    // </section>
+    var section = createElement('section', {'class': 'publication', itemscope: '', itemtype: 'http://schema.org/CreativeWork'});
+    section.appendChild(
+      createElement('h2', {itemprop: 'name'}, fields.title)
     );
     // sortDate
     // attachment?
-    div.appendChild(
-      createElement('p', {'class': 'cite'}, fields.publication + (fields.publicationIssue ? ' — ' + fields.publicationIssue : ''))
+    var dateLine = createElement('p', {'class': 'cite'});
+
+    dateLine.appendChild(
+      createElement('span', {itemprop: 'isPartOf'}, fields.publication)
     );
+
+    if (fields.publicationIssue) {
+      dateLine.append(' — ');
+      dateLine.appendChild(
+        createElement('span', {itemprop: 'datePublished'}, fields.publicationIssue)
+      );
+    }
+
+    section.appendChild(dateLine);
     if (fields.notes) {
-      div.appendChild(
+      section.appendChild(
         createElement('p', null, fields.notes)
       );
     }
 
     if (fields.link) {
-      div.appendChild(
-        createElement('a', {href: fields.link, target: '_blank', rel: 'nofollow'}, 'Read')
+      section.appendChild(
+        createElement('a', {href: fields.link, itemprop: 'url', target: '_blank', rel: 'nofollow'}, 'Read')
       );
     }
 
     if (fields.attachment) {
       var asset = findAsset(data.includes.Asset, fields.attachment.sys.id);
 
-      div.appendChild(
+      section.appendChild(
         createElement('a', {href: asset.fields.file.url, target: '_blank', rel: 'nofollow'}, 'Read')
       );
     }
 
-    return div;
-  });
+    return section;
+  }).forEach(function (li) { ul.appendChild(li); });
+
+  return ul;
 }
 
 function renderContent (res) {
