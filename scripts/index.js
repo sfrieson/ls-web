@@ -121,13 +121,13 @@ function renderChoreography (data) {
 
 // content.html
 function renderCurrent (data) {
-  console.log(data);
   var items = data.items;
   items.sort(function (a, b) { return a.fields.date < b.fields.date; });
 
   var ul = createElement('ul', {class: 'current-works'});
   items.map(function (item) {
     var fields = item.fields;
+
     var section = createElement('section', {itemscope: '', itemtype: 'http://schema.org/CreativeWork', class: 'current-works__item'});
 
     if (fields.image) {
@@ -135,7 +135,7 @@ function renderCurrent (data) {
 
       var imgContainer = createElement('div', {class: 'list-item__image-container'});
       imgContainer.appendChild(
-        createElement('img', {class: 'list-item__image', src: img.fields.file.url, itemprop: 'image'})
+        createElement('img', {class: 'list-item__image', src: img.fields.file.url, itemprop: 'image', alt: img.fields.title})
       );
       section.appendChild(imgContainer);
     }
@@ -192,12 +192,6 @@ function renderPublications (data) {
 
   items.map(function (item) {
     var fields = item.fields;
-    // <section>
-    //   <h3>{title}</h3>
-    //   <span>{publication} – {publicationIssue}</span>
-    //   <p>{notes}</p>
-    //   <a href='{link || asset.fields.file.url}'>Read</a>
-    // </section>
     var section = createElement('section', {'class': 'publication', itemscope: '', itemtype: 'http://schema.org/CreativeWork'});
     section.appendChild(
       createElement('h2', {itemprop: 'name'}, fields.title)
@@ -238,7 +232,9 @@ function renderPublications (data) {
       );
     }
 
-    return section;
+    var li = createElement('li');
+    li.appendChild(section);
+    return li;
   }).forEach(function (li) { ul.appendChild(li); });
 
   return ul;
