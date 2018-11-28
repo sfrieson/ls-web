@@ -1,8 +1,0 @@
-More (or less) results from AJAX calls
-
-Service worker?
-Prefetch?
-better empty states and loading indicators
-
-Include webpack in build process.
-Move to Contentful (with their logo)
