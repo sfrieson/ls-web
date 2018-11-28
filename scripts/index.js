@@ -150,9 +150,11 @@ function renderCurrent (data) {
 
     var listItemInfo = createElement('div', {class: 'list-item__info'});
 
-    listItemInfo.appendChild(
-      createElement('h3', {class: 'list-item__title', itemprop: 'name'}, fields.title)
-    );
+    // TODO Restore when a current work has a title again
+    // listItemInfo.appendChild(
+    //   createElement('h3', {class: 'list-item__title', itemprop: 'name'}, fields.title)
+    // );
+
     listItemInfo.appendChild(
       createElement('p', {itemprop: 'about'}, fields.description)
     );
