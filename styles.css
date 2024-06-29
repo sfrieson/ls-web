@@ -1,6 +1,18 @@
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/Montserrat-VariableFont_wght.ttf') format('truetype');
+}
 /* Mobile first, larger sizes at the end of each section. */
 
 /* Resets and globals */
+
+:root {
+  --gray: #4c4848;
+}
+
 ul {
   list-style: none;
   margin-top: 0;
@@ -9,22 +21,29 @@ ul {
 
 body {
   background-color: #eee;
-  border-top: 15px solid #4c4c4c;
+  background-image: linear-gradient(to bottom, #fff, #eee);
+  background-attachment: fixed;
+  border-top: 15px solid var(--gray);
   box-sizing: border-box;
-  color: #4c4c4c;
-  font-family: arial;
+  color: var(--gray);
+  font-family: "Montserrat", Arial, sans-serif;
   margin: 0;
   padding: 0 1rem;
   position: relative;
 }
 
 a {
-  color: #4c4c4c;
+  color: var(--gray);
+  font-family: "Montserrat", Arial, sans-serif;
 }
 
 a:hover {
   color: darkred;
   font-weight: bold;
+}
+
+p {
+  font-family: "Montserrat", Arial, sans-serif;
 }
 
 h1,
@@ -33,7 +52,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: Arial, sans-serif;
+  font-family: "Montserrat", Arial, sans-serif;
 }
 
 @media (min-width: 600px) {
@@ -87,8 +106,8 @@ img {
 /* Menu */
 
 .menu {
-  border-bottom: 7px solid #4c4c4c;
-  border-top: 7px solid #4c4c4c;
+  border-bottom: 7px solid var(--gray);
+  border-top: 7px solid var(--gray);
   box-sizing: border-box;
 }
 
