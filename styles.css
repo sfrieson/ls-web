@@ -44,6 +44,7 @@ a:hover {
 
 p {
   font-family: "Montserrat", Arial, sans-serif;
+  text-wrap: pretty;
 }
 
 h1,
@@ -53,6 +54,7 @@ h4,
 h5,
 h6 {
   font-family: "Montserrat", Arial, sans-serif;
+  text-wrap: balance;
 }
 
 @media (min-width: 600px) {
@@ -219,6 +221,13 @@ img {
 
 .cite {
   font-size: .8em;
+}
+
+.hanging {
+  padding-left: 3em;
+  text-indent: -1.5em;
+  display: inline-block;
+  font-style: normal;
 }
 
 #loading {
