@@ -284,3 +284,7 @@ img {
   margin-top: 3em;
   text-align: center;
 }
+
+.selected-list > li{
+  margin-bottom: 1.5em;
+}

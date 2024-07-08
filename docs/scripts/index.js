@@ -56,10 +56,6 @@ function apiRequest(pathname, callback) {
       endpoint = "/entries";
       query = "?content_type=choreography";
       break;
-    case "/writing.html":
-      endpoint = "/entries";
-      query = "?content_type=publication";
-      break;
     default:
       return;
   }
@@ -70,16 +66,6 @@ function apiRequest(pathname, callback) {
     });
   });
 }
-
-// choreography.html
-// function vimeo (url) {
-//   if (!/vimeo/.test(url)) {
-//     return url;
-//   }
-//   var idNum = url.match(/\d+/g)[0];
-//   return '<iframe src="https://player.vimeo.com/video/' + idNum + '" ' +
-//     'frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
-// }
 
 function renderChoreography(data) {
   var ul = createElement("ul", { class: "current-works" });
@@ -131,90 +117,6 @@ function findAsset(assets, id) {
   return found;
 }
 
-// writing.html
-function renderPublications(data) {
-  var ul = createElement("ul");
-
-  data.items
-    .sort(function (a, b) {
-      var aDate = a.fields.sortDate;
-      var bDate = b.fields.sortDate;
-      if (aDate > bDate) return -1;
-      else if (aDate < bDate) return 1;
-      else return 0;
-    })
-    .map(function (item) {
-      var fields = item.fields;
-      var section = createElement("section", {
-        class: "publication",
-        itemscope: "",
-        itemtype: "http://schema.org/CreativeWork",
-      });
-      section.appendChild(
-        createElement("h4", { itemprop: "name" }, fields.title)
-      );
-      // sortDate
-      // attachment?
-      var dateLine = createElement("p", { class: "cite" });
-
-      dateLine.appendChild(
-        createElement("span", { itemprop: "isPartOf" }, fields.publication)
-      );
-
-      if (fields.publicationIssue) {
-        dateLine.append(" — ");
-        dateLine.appendChild(
-          createElement(
-            "span",
-            { itemprop: "datePublished" },
-            fields.publicationIssue
-          )
-        );
-      }
-
-      section.appendChild(dateLine);
-      if (fields.notes) {
-        section.appendChild(createElement("p", null, fields.notes));
-      }
-
-      if (fields.link) {
-        section.appendChild(
-          createElement(
-            "a",
-            {
-              href: fields.link,
-              itemprop: "url",
-              target: "_blank",
-              rel: "nofollow",
-            },
-            "Read"
-          )
-        );
-      }
-
-      if (fields.attachment) {
-        var asset = findAsset(data.includes.Asset, fields.attachment.sys.id);
-
-        section.appendChild(
-          createElement(
-            "a",
-            { href: asset.fields.file.url, target: "_blank", rel: "nofollow" },
-            "Read"
-          )
-        );
-      }
-
-      var li = createElement("li");
-      li.appendChild(section);
-      return li;
-    })
-    .forEach(function (li) {
-      ul.appendChild(li);
-    });
-
-  return ul;
-}
-
 function renderContent(res) {
   var main = document.getElementsByTagName("main")[0];
   var loading = document.getElementById("loading");
@@ -225,33 +127,8 @@ function renderContent(res) {
     case "/choreography.html":
       content = renderChoreography(res);
       break;
-    case "/writing.html":
-      content = renderPublications(res);
-      break;
   }
 
   if (Array.isArray(content)) content.forEach(main.appendChild.bind(main));
   else main.appendChild(content);
-}
-
-var dateRE = new RegExp("(\\d{4})-(\\d{2})-(\\d{2})");
-var months = {
-  "01": "January",
-  "02": "February",
-  "03": "March",
-  "04": "April",
-  "05": "May",
-  "06": "June",
-  "07": "July",
-  "08": "August",
-  "09": "September",
-  10: "October",
-  11: "November",
-  12: "December",
-};
-
-function dateToText(date) {
-  var matches = date.match(dateRE);
-
-  return months[matches[2]] + " " + +matches[3] + ", " + matches[1];
 }
