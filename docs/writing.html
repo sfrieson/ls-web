@@ -35,13 +35,11 @@
   </head>
   <body>
     <div class="page">
-      <header>
-        <h1 class="header__title">
-          <a class="header__link" href="/">Leslie Satin</a>
-        </h1>
-      </header>
       <div class="layout">
         <aside class="aside">
+          <h1 class="header__title">
+            <a class="header__link" href="/">Leslie Satin</a>
+          </h1>
           <nav class="nav">
             <ul class="menu">
               <li class="menu-item">
@@ -60,15 +58,20 @@
               </li>
             </ul>
             <div class="images images-sm">
-              <picture class="img-1">
+              <picture class="img img-1">
                 <img src="/images/take-off_and_landing-1.jpg" alt="" />
               </picture>
-              <picture class="img-2">
+              <picture class="img img-2 images--half">
                 <img src="/images/far_from_it-1.jpg" alt="" />
               </picture>
-              <picture class="img-3">
-                <img src="/images/shadow_load-2.jpg" alt="" />
-              </picture>
+              <div class="images--half images--vertical">
+                <picture class="img img-3">
+                  <img src="/images/shadow_load-2.jpg" alt="" />
+                </picture>
+                <picture class="img img-3">
+                  <img src="/images/picking-up-where-we-left-off.png" alt="" />
+                </picture>
+              </div>
             </div>
           </nav>
         </aside>
@@ -257,7 +260,7 @@
           </p>
           <hr />
           <h3>Selected Publications</h3>
-          <ul>
+          <ul class="selected-list">
             <li>
               <section
                 class="publication"
@@ -430,17 +433,6 @@
         <div>
           &copy; 2024 Leslie Satin. Designed and developed by
           <a href="http://stevenfrieson.com">Steven Frieson</a>.
-        </div>
-        <div>
-          <a
-            href="https://www.contentful.com/"
-            rel="nofollow"
-            target="&ldquo;_blank&rdquo;"
-            ><img
-              src="https://images.contentful.com/fo9twyrwpveg/44baP9Gtm8qE2Umm8CQwQk/c43325463d1cb5db2ef97fca0788ea55/PoweredByContentful_LightBackground.svg"
-              style="margin-top: 1rem; max-width: 100px; width: 100%"
-              alt="Powered by Contentful"
-          /></a>
         </div>
       </footer>
     </div>
