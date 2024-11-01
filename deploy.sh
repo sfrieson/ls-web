@@ -10,4 +10,6 @@ cp ./scripts/* ./docs/scripts
 
 echo copied
 
-gcam 'Copy and deploy'
+git add ./docs
+git commit -m '🤖 Copied to docs'
+git push
